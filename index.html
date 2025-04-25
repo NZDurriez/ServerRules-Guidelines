@@ -67,15 +67,9 @@
 <body>
   <div class="container">
     <h1>Server Rules and Guidelines</h1>
-
-    <div class="intro">
-Introduction
-
-Please ensure you read and are familiar with all of the rules for the BHRP FivePD Server.
-
+    <div class="intro"><center>Please ensure you read and are familiar with all of the rules for the BHRP FivePD Server.
 By joining and playing on the FivePD Server, you agree to the rules set out below.
-
-Failure to comply with these rules will result in disciplinary action by the FivePD Staff Team.
+Failure to comply with these rules will result in disciplinary action by the FivePD Staff Team.</center>
     </div>
 
     <details>
@@ -359,23 +353,26 @@ The scenes listed below require approval from an admin+ before they are conducte
   </div>
 
   <script>
-    document.querySelectorAll('details').forEach(detailsEl => {
-      const summary = detailsEl.querySelector('summary');
-      const content = detailsEl.querySelector('.content');
-      function toggle() {
-        detailsEl.open = !detailsEl.open;
-      }
+    // Prevent details from collapsing when the user is dragging / selecting text.
+    document.querySelectorAll('details > summary').forEach(summary => {
       summary.addEventListener('click', e => {
-        e.preventDefault();
-        toggle();
-      });
-      content.addEventListener('click', e => {
-        // only toggle if no text is selected
-        if (!window.getSelection().toString()) {
-          toggle();
+        const sel = window.getSelection();
+        // if there's an active text selection, stop the default toggle
+        if (sel && sel.toString().length > 0) {
+          e.preventDefault();
         }
       });
     });
+
+    // Make sure summary text is selectable
+    const style = document.createElement('style');
+    style.textContent = `
+      details > summary {
+        user-select: text;
+        -webkit-user-select: text;
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 </body>
 </html>
